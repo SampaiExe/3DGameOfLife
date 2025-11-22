@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqow47bch5ocs"]
+
+[ext_resource type="Script" uid="uid://cddoxt0ri67er" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Material" uid="uid://bqi0ca0gate52" path="res://cellMat.tres" id="2_0xm2m"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+material = ExtResource("2_0xm2m")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 1
+background_color = Color(0.24477637, 0.2447764, 0.24477637, 1)
+glow_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_h2yge"]
+
+[sub_resource type="Compositor" id="Compositor_1bvp3"]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_ig7tw")
+cellMat = ExtResource("2_0xm2m")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.278221, 11.419155, 44.76335)
+
+[node name="Cell" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ig7tw")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+camera_attributes = SubResource("CameraAttributesPractical_h2yge")
+compositor = SubResource("Compositor_1bvp3")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

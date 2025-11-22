@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3 uid="uid://cqow47bch5ocs"]
+
+[ext_resource type="Script" uid="uid://cddoxt0ri67er" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Material" uid="uid://bqi0ca0gate52" path="res://cellMat.tres" id="2_0xm2m"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 1
+background_color = Color(0.24477637, 0.2447764, 0.24477637, 1)
+glow_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_h2yge"]
+
+[sub_resource type="Compositor" id="Compositor_1bvp3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
+material = ExtResource("2_0xm2m")
+
+[sub_resource type="MultiMesh" id="MultiMesh_h2yge"]
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_ig7tw")
+cellMat = ExtResource("2_0xm2m")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.99958634, 0.0006501574, 0.028752275, 0, 0.9997445, -0.0226066, -0.028759625, 0.022597251, 0.9993309, 25.994814, 13.571003, 74.53869)
+
+[node name="Cell" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ig7tw")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+camera_attributes = SubResource("CameraAttributesPractical_h2yge")
+compositor = SubResource("Compositor_1bvp3")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("MultiMesh_h2yge")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
